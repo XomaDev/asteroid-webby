@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Asteroid is working!'
+    return 'Asteroid is working! :)'
 
 
 @app.route('/api/answer')

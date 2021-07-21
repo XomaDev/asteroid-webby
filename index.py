@@ -1,3 +1,5 @@
+from json import JSONEncoder
+
 from flask import Flask, request
 
 import chocolateo
@@ -12,6 +14,14 @@ def home():
 
 @app.route('/api/answer')
 def api():
-    text = request.args.get("text")
-    result = chocolateo.web_scrape(text)
-    return '{ "answer":"' + result[0] + '", "source":"' + result[1] + '"}'
+    result = chocolateo.web_scrape(request.args.get("text"))
+
+    return app.response_class(
+        response=JSONEncoder().encode({
+            "answer": result[0],
+            "source": result[1]
+        }),
+        status=200,
+        mimetype='application/json'
+    )
+
